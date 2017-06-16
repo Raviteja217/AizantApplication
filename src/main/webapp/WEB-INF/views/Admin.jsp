@@ -94,6 +94,11 @@ container {
 								<tr>
 									<td><a href="show_crf">Assign CRF's</a></td>
 									<td><a href="show_privilegers">Privileges</a></td>
+									<td><a href="show_azform3">form3</a></td>
+								</tr>
+								<tr>
+									<td><a href="show_forms">Add Forms</a></td>
+									<td></td>
 								</tr>
 							</table>
 						</div>
