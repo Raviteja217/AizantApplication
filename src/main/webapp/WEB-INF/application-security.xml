@@ -1,0 +1,49 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+	<http use-expressions="true" auto-config="true">
+
+		<intercept-url access="hasRole('ROLE_ADMIN')" pattern="/admin**" />
+
+		<intercept-url access="hasRole('ROLE_MONITOR/QA')"
+			pattern="/user**" />
+	
+
+
+		<form-login authentication-failure-url="/fail2login"
+			default-target-url="/welcome" login-processing-url="/j_spring_security_check"
+			login-page="/login" />
+
+		<logout logout-success-url="/logoutsuccess" logout-url="/Logout"
+			delete-cookies="JSESSIONID" />
+
+		<csrf disabled="true" />
+
+
+	</http>
+
+	<!-- <global-method-security secured-annotations="enabled" /> -->
+
+
+	<!-- Select users and user_roles from database -->
+	<beans:bean id="userDetailsService" class="com.aizant.Services.MyUserDetailsService" />
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg value="11" />
+	</beans:bean>
+
+	<beans:bean id="authProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider ref="authProvider" />
+	</authentication-manager>
+</beans:beans>
